@@ -1,4 +1,4 @@
-# Fresh project
+# Research - Cross Window Communication
 
 ## Installation
 
