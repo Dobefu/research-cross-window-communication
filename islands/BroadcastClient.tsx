@@ -20,6 +20,8 @@ export default function Counter() {
   return (
     <>
       counter: {counter}
+
+      <pre>{JSON.stringify(windowPosition, null, 2)}</pre>
     </>
   );
 }

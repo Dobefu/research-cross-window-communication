@@ -22,4 +22,6 @@ export default function useWindowPosition() {
   };
 
   useSignalEffect(getWindowPosition);
+
+  return windowPosition;
 }

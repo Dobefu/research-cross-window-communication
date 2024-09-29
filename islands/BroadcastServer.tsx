@@ -13,6 +13,8 @@ export default function Counter() {
       >
         Send message
       </Button>
+
+      <pre>{JSON.stringify(windowPosition, null, 2)}</pre>
     </>
   );
 }
