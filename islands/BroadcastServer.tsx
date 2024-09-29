@@ -4,11 +4,19 @@ import { useSignal, useSignalEffect } from "@preact/signals";
 
 export default function Counter() {
   const bc = new BroadcastChannel("application");
-  const clients = useSignal<Record<string, { uuid: string }>>({});
+  const clients = useSignal<Record<string, { uuid: string; age: number }>>({});
 
   const windowPosition = useWindowPosition();
 
   const update = () => {
+    Object.keys(clients.value).forEach((clientKey) => {
+      clients.value[clientKey].age += 1;
+
+      if (clients.value[clientKey].age >= 100) {
+        delete clients.value[clientKey];
+      }
+    });
+
     requestAnimationFrame(update);
   };
 
@@ -16,7 +24,7 @@ export default function Counter() {
 
   bc.onmessage = function (ev) {
     if (ev.data.command === "keepalive") {
-      clients.value[ev.data.uuid] = { uuid: ev.data.uuid as string };
+      clients.value[ev.data.uuid] = { uuid: ev.data.uuid, age: 0 };
 
       return;
     }
