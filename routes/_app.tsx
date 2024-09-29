@@ -11,7 +11,7 @@ export default function App({ Component }: PageProps) {
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
-        <main id="main-content">
+        <main class="m-8" id="main-content">
           <Component />
         </main>
       </body>

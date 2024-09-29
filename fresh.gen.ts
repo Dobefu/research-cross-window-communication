@@ -5,9 +5,12 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
+import * as $client from "./routes/client.tsx";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
-import * as $Counter from "./islands/Counter.tsx";
+import * as $server from "./routes/server.tsx";
+import * as $BroadcastClient from "./islands/BroadcastClient.tsx";
+import * as $BroadcastServer from "./islands/BroadcastServer.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -15,11 +18,14 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/joke.ts": $api_joke,
+    "./routes/client.tsx": $client,
     "./routes/greet/[name].tsx": $greet_name_,
     "./routes/index.tsx": $index,
+    "./routes/server.tsx": $server,
   },
   islands: {
-    "./islands/Counter.tsx": $Counter,
+    "./islands/BroadcastClient.tsx": $BroadcastClient,
+    "./islands/BroadcastServer.tsx": $BroadcastServer,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
