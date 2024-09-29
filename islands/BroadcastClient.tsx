@@ -1,9 +1,12 @@
 import { useSignal } from "@preact/signals";
+import useWindowPosition from "../hooks/useWindowPosition.ts";
 
 export default function Counter() {
-  const counter = useSignal(0);
-
   const bc = new BroadcastChannel("application");
+
+  const windowPosition = useWindowPosition();
+
+  const counter = useSignal(0);
 
   bc.onmessage = function (ev) {
     if (ev.data.command === "counter_add") {

@@ -1,7 +1,10 @@
 import { Button } from "../components/Button.tsx";
+import useWindowPosition from "../hooks/useWindowPosition.ts";
 
 export default function Counter() {
   const bc = new BroadcastChannel("application");
+
+  const windowPosition = useWindowPosition();
 
   return (
     <>
