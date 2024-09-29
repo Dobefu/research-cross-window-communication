@@ -1,14 +1,20 @@
 import useWindowPosition from "../hooks/useWindowPosition.ts";
-import { useSignalEffect } from "@preact/signals";
+import { useSignal, useSignalEffect } from "@preact/signals";
 
 export default function Counter() {
   const bc = new BroadcastChannel("application");
   const uuid = crypto.randomUUID();
 
-  const windowPosition = useWindowPosition();
+  const { getWindowPosition } = useWindowPosition();
+  const windowPosition = useSignal<
+    ReturnType<typeof getWindowPosition> | object
+  >({});
 
   const update = () => {
-    bc.postMessage({ command: "ping", uuid, value: windowPosition });
+    windowPosition.value = getWindowPosition();
+
+    // @ts-expect-error TODO Fix later.
+    bc.postMessage({ command: "ping", uuid, value: windowPosition.v });
     requestAnimationFrame(update);
   };
 
@@ -22,7 +28,6 @@ export default function Counter() {
 
   return (
     <>
-      <pre>{JSON.stringify(windowPosition, null, 2)}</pre>
     </>
   );
 }

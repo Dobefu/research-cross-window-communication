@@ -14,9 +14,14 @@ export default function Counter() {
     >
   >({});
 
-  const windowPosition = useWindowPosition();
+  const { getWindowPosition } = useWindowPosition();
+  const windowPosition = useSignal<
+    ReturnType<typeof getWindowPosition> | object
+  >({});
 
   const update = () => {
+    windowPosition.value = getWindowPosition();
+
     Object.keys(clients.value).forEach((clientKey) => {
       clients.value[clientKey].age += 1;
 
@@ -56,7 +61,20 @@ export default function Counter() {
         return (
           <p>
             <h2 class="font-semibold">{clientKey}</h2>
-            <pre>{JSON.stringify(client, null, 2)}</pre>
+
+            <div
+              class="bg-black fixed"
+              style={{
+                // @ts-expect-error TODO Fix later.
+                top: client.windowPosition.top - windowPosition.value.top,
+                // @ts-expect-error TODO Fix later.
+                left: client.windowPosition.left - windowPosition.value.left,
+                // @ts-expect-error TODO Fix later.
+                width: client.windowPosition.width,
+                // @ts-expect-error TODO Fix later.
+                height: client.windowPosition.height,
+              }}
+            />
           </p>
         );
       })}
