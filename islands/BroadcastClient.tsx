@@ -20,12 +20,14 @@ export default function Counter() {
 
   useSignalEffect(update);
 
-  bc.onmessage = function (ev) {
-    if (ev.data.command === "counter_add") {
-      counter.value += ev.data.value;
-      return;
-    }
-  };
+  useSignalEffect(() => {
+    bc.onmessage = function (ev) {
+      if (ev.data.command === "counter_add") {
+        counter.value += ev.data.value;
+        return;
+      }
+    };
+  });
 
   return (
     <>

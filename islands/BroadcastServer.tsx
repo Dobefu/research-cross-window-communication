@@ -12,7 +12,7 @@ export default function Counter() {
     Object.keys(clients.value).forEach((clientKey) => {
       clients.value[clientKey].age += 1;
 
-      if (clients.value[clientKey].age >= 100) {
+      if (clients.value[clientKey].age >= 360) {
         delete clients.value[clientKey];
       }
     });
@@ -22,15 +22,17 @@ export default function Counter() {
 
   useSignalEffect(update);
 
-  bc.onmessage = function (ev) {
-    if (ev.data.command === "keepalive") {
-      clients.value[ev.data.uuid] = { uuid: ev.data.uuid, age: 0 };
+  useSignalEffect(() => {
+    bc.onmessage = function (ev) {
+      if (ev.data.command === "keepalive") {
+        clients.value[ev.data.uuid] = { uuid: ev.data.uuid, age: 0 };
 
-      return;
-    }
+        return;
+      }
 
-    console.log(ev);
-  };
+      console.log(ev);
+    };
+  });
 
   return (
     <div class="flex flex-col gap-8">
