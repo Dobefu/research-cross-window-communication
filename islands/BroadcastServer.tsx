@@ -1,10 +1,18 @@
-import { Button } from "../components/Button.tsx";
 import useWindowPosition from "../hooks/useWindowPosition.ts";
 import { useSignal, useSignalEffect } from "@preact/signals";
 
 export default function Counter() {
   const bc = new BroadcastChannel("application");
-  const clients = useSignal<Record<string, { uuid: string; age: number }>>({});
+  const clients = useSignal<
+    Record<
+      string,
+      {
+        uuid: string;
+        age: number;
+        windowPosition: typeof windowPosition;
+      }
+    >
+  >({});
 
   const windowPosition = useWindowPosition();
 
@@ -24,24 +32,22 @@ export default function Counter() {
 
   useSignalEffect(() => {
     bc.onmessage = function (ev) {
-      if (ev.data.command === "keepalive") {
-        clients.value[ev.data.uuid] = { uuid: ev.data.uuid, age: 0 };
+      if (ev.data.command === "ping") {
+        clients.value[ev.data.uuid] = {
+          uuid: ev.data.uuid,
+          age: 0,
+          windowPosition: ev.data.value,
+        };
 
         return;
       }
 
-      console.log(ev);
+      console.log(`Unhandled event: ${ev}`);
     };
   });
 
   return (
     <div class="flex flex-col gap-8">
-      <Button
-        onClick={() => bc.postMessage({ command: "counter_add", value: 1 })}
-      >
-        Send message
-      </Button>
-
       <pre>{JSON.stringify(windowPosition, null, 2)}</pre>
 
       <p class="text-lg font-semibold">Clients:</p>
