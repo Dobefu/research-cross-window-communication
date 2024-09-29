@@ -1,7 +1,8 @@
-import { useSignal, useSignalEffect } from "@preact/signals";
+import { useSignalEffect } from "@preact/signals";
+import { useState } from "preact/hooks";
 
 export default function useWindowPosition() {
-  const windowPosition = useSignal({
+  const [windowPosition, setWindowPosition] = useState({
     x: 0,
     y: 0,
     width: 0,
@@ -11,12 +12,14 @@ export default function useWindowPosition() {
   });
 
   const getWindowPosition = () => {
-    windowPosition.value.x = globalThis.window.screenX;
-    windowPosition.value.y = globalThis.window.screenY;
-    windowPosition.value.width = globalThis.window.outerWidth;
-    windowPosition.value.height = globalThis.window.outerHeight;
-    windowPosition.value.top = globalThis.window.screenTop;
-    windowPosition.value.left = globalThis.window.screenLeft;
+    setWindowPosition({
+      x: globalThis.window.screenX,
+      y: globalThis.window.screenY,
+      width: globalThis.window.outerWidth,
+      height: globalThis.window.outerHeight,
+      top: globalThis.window.screenTop,
+      left: globalThis.window.screenLeft,
+    });
 
     requestAnimationFrame(getWindowPosition);
   };
