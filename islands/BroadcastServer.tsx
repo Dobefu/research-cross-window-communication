@@ -63,8 +63,9 @@ export default function Counter() {
             <h2 class="font-semibold">{clientKey}</h2>
 
             <div
-              class="bg-black fixed"
+              class="fixed"
               style={{
+                backgroundColor: `#${client.uuid.slice(0, 6)}`,
                 // @ts-expect-error TODO Fix later.
                 top: client.windowPosition.top - windowPosition.value.top,
                 // @ts-expect-error TODO Fix later.
