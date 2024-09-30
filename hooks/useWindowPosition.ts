@@ -3,8 +3,8 @@ export default function useWindowPosition() {
     return {
       x: globalThis.window.screenX,
       y: globalThis.window.screenY,
-      width: globalThis.window.outerWidth,
-      height: globalThis.window.outerHeight,
+      width: globalThis.window.innerWidth,
+      height: globalThis.window.innerHeight,
       top: globalThis.window.screenTop,
       left: globalThis.window.screenLeft,
     };
