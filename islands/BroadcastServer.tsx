@@ -63,17 +63,19 @@ export default function Counter() {
             <h2 class="font-semibold">{clientKey}</h2>
 
             <div
-              class="fixed"
+              class="fixed will-change-transform top-0 left-0 w-px h-px origin-top-left"
               style={{
                 backgroundColor: `#${client.uuid.slice(0, 6)}`,
-                // @ts-expect-error TODO Fix later.
-                top: client.windowPosition.top - windowPosition.value.top,
-                // @ts-expect-error TODO Fix later.
-                left: client.windowPosition.left - windowPosition.value.left,
-                // @ts-expect-error TODO Fix later.
-                width: client.windowPosition.width,
-                // @ts-expect-error TODO Fix later.
-                height: client.windowPosition.height,
+                transform: `translate(${
+                  // @ts-expect-error TODO Fix later.
+                  client.windowPosition.left - windowPosition.value.left}px, ${
+                  // @ts-expect-error TODO Fix later.
+                  client.windowPosition.top - windowPosition.value.top}px)
+                  scale(${
+                  // @ts-expect-error TODO Fix later.
+                  client.windowPosition.width}, ${
+                  // @ts-expect-error TODO Fix later.
+                  client.windowPosition.height})`,
               }}
             />
           </p>
